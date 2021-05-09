@@ -6,24 +6,24 @@ using System.Text;
 namespace GRUPA_K12.Classes.BusinessLogic
 {
     [DataContract]
-    public class User : XmlStorage<User> 
+    public class User : FileXmlStorage<User> 
     {
         [DataMember]
         public string Login { get; set; }
         [DataMember]
         public string Password { get; set; }
-
+        [DataMember]
+        public int Permission { get; set; }
+        [DataMember]
+        public Response Response { get; set; }
         public User()
         {
             this.BaseObject = this;
         }
-        
-        public override bool InitializeFromObject(User Object)
-        {
-            this.Login = Object.Login;
-            this.Password = Object.Password;
 
-            return true;
+        public override string ToString()
+        {
+            return $"[Login={Login}|Password=???|Permission={Permission}|Response={Response}]";
         }
     }
 }

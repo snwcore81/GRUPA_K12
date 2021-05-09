@@ -10,17 +10,39 @@ namespace GRUPA_K12
     {
         static void Main(string[] args)
         {
-            XmlStorageTypes.Register<User>();
+            /*
+            User _oUser = new User
+            {
+                Login = "jkuzmicz",
+                Password = "12pwd34",
+                Permission = 1,
+                Response = new Response(100,new Exception("test"))
+            };
 
-            string _sXML = @"<User xmlns=""http://schemas.datacontract.org/2004/07/GRUPA_K12.Classes.BusinessLogic"" xmlns:i=""http://www.w3.org/2001/XMLSchema-instance""><Login>jacek</Login><Password>12jacek34</Password></User>" ;
-
-            Console.WriteLine(_sXML);
-
+            try
+            {
+                _oUser.ExportToFile("user.xml");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            */
+         
+            
             User _oUser = new User();
 
-            _oUser.FromXml(new MemoryStream(Encoding.UTF8.GetBytes(_sXML)));
-
-            Console.WriteLine($"Login={_oUser.Login} Password={_oUser.Password}");
+            try
+            {
+                if (_oUser.ImportFromFile("user.xml"))
+                {
+                    Console.WriteLine(_oUser);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
 
             /*
             User _oUser = new User
