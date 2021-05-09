@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using GRUPA_K12.Classes;
 using GRUPA_K12.Classes.BusinessLogic;
+using GRUPA_K12.Classes.Messages;
 
 namespace GRUPA_K12
 {
@@ -10,6 +11,22 @@ namespace GRUPA_K12
     {
         static void Main(string[] args)
         {
+            MessageFactory.Instance.Register<LoginMessage>();
+            MessageFactory.Instance.Register<TextMessage>();
+
+            Console.Write("Wybierz tryb uruchomienia programu (1-klient,2-serwer):");
+
+            switch (Console.ReadLine())
+            {
+                case "1":
+                    new TestClient().Run();
+                    break;
+
+                case "2":
+                    new TestServer().Run();
+                    break;
+            }
+
             /*
             User _oUser = new User
             {
@@ -29,7 +46,7 @@ namespace GRUPA_K12
             }
             */
          
-            
+            /*
             User _oUser = new User();
 
             try
@@ -43,17 +60,7 @@ namespace GRUPA_K12
             {
                 Console.WriteLine(e.Message);
             }
-
-            /*
-            User _oUser = new User
-            {
-                Login = "jacek",
-                Password = "12jacek34"
-            };
-            
-            string _sXML = Encoding.UTF8.GetString(_oUser.ToXml().ToArray());
             */
-
             
         }
     }

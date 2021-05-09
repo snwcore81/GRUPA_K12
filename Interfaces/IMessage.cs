@@ -9,5 +9,7 @@ namespace GRUPA_K12.Interfaces
     {
         IMessage ProcessRequest(StateObject a_oStateObject);
         IMessage ProcessResponse(StateObject a_oStateObject);
+
+        NetworkData AsNetworkData(int a_iDataSize = NetworkService.BUFFER_SIZE);
     }
 }
