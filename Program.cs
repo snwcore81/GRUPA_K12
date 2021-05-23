@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using GRUPA_K12.Classes;
 using GRUPA_K12.Classes.BusinessLogic;
+using GRUPA_K12.Classes.Database;
 using GRUPA_K12.Classes.Messages;
 using GRUPA_K12.Classes.System;
 
@@ -16,6 +17,71 @@ namespace GRUPA_K12
 
             XmlStorageTypes.Initialize();
 
+            var _db = new MySqlSource
+            {
+                Host = "127.0.0.1",
+                Port = 3306,
+                Login = "admin",
+                Password = "mydatabase1234",
+                Schema = "mydatabase"
+            };
+
+            _db.Connect();
+
+            LoginDbObject _nowyLogin = new LoginDbObject
+            {
+                Login = "jacek",
+                Password = "12test34",
+                LastUpdate = DateTime.Now
+            };
+
+            try
+            {
+                _db.TransactionStart();
+                _nowyLogin.Insert(_db);
+                _db.TransactionCommit();
+            }
+            catch (Exception e)
+            {
+                _log.PR_DEB($"Wyjątek! {e.Message}");
+
+                _db.TransactionRollback();
+            }
+
+            /*
+            foreach (var _oLogin in _db.ExecuteReader<LoginDbObject>())
+            {
+                try
+                {
+                    _db.TransactionStart();
+
+                    Console.WriteLine(_oLogin);
+
+                    Console.Write($"Podaj nowe hasło dla użytkownika <{_oLogin.Login}>:");
+                    _oLogin.Password = Console.ReadLine();
+
+                    if (_oLogin.IsChanged)
+                    {
+                        _oLogin.LastUpdate = DateTime.Now;
+                        _oLogin.Update(_db);
+                    }
+
+                    _db.TransactionCommit();
+
+                }
+                catch (Exception e)
+                {
+                    _log.PR_DEB($"Wyjątek! {e.Message}");
+
+                    _db.TransactionRollback();
+                }
+            }
+            */
+
+
+            _db.Disconnect();
+
+            /*
             MessageFactory.Instance.Register<LoginMessage>();
             MessageFactory.Instance.Register<TextMessage>();
 
@@ -31,6 +97,7 @@ namespace GRUPA_K12
                     new TestServer().Run();
                     break;
             }
+            */
 
             /*
             User _oUser = new User
@@ -50,7 +117,7 @@ namespace GRUPA_K12
                 Console.WriteLine(e.Message);
             }
             */
-         
+
             /*
             User _oUser = new User();
 
@@ -66,7 +133,7 @@ namespace GRUPA_K12
                 Console.WriteLine(e.Message);
             }
             */
-            
+
         }
     }
 }
