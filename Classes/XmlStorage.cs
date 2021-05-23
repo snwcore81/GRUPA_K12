@@ -1,4 +1,5 @@
-﻿using GRUPA_K12.Interfaces;
+﻿using GRUPA_K12.Classes.System;
+using GRUPA_K12.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,7 +15,9 @@ namespace GRUPA_K12.Classes
         private static readonly List<Type> KnownTypes = new List<Type>();
         static XmlStorageTypes()
         {
-            Register<Object>();
+            using var _log = Log.DEB("XmlStorageTypes", "XmlStorageTypes");
+
+            Register<object>();
             Register<Exception>();
 
             foreach (var _type in Assembly.GetExecutingAssembly().GetTypes())
@@ -32,12 +35,19 @@ namespace GRUPA_K12.Classes
                 }
             }
         }
+
+        public static void Initialize()
+        {
+            using var _log = Log.DEB("XmlStorageTypes", "Initialize");
+        }
         
         public static void Register(Type _oType)
         {
+            using var _log = Log.DEB("XmlStorageTypes", "Register");
+
             if (!KnownTypes.Contains(_oType))
             {
-                Console.WriteLine($"Register:{_oType.Name}");
+                _log.PR_DEB($"Register:{_oType.Name}");
 
                 KnownTypes.Add(_oType);
             }

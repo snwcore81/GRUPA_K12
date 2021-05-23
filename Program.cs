@@ -4,6 +4,7 @@ using System.Text;
 using GRUPA_K12.Classes;
 using GRUPA_K12.Classes.BusinessLogic;
 using GRUPA_K12.Classes.Messages;
+using GRUPA_K12.Classes.System;
 
 namespace GRUPA_K12
 {
@@ -11,6 +12,10 @@ namespace GRUPA_K12
     {
         static void Main(string[] args)
         {
+            using var _log = Log.DEB("Program", "Main");
+
+            XmlStorageTypes.Initialize();
+
             MessageFactory.Instance.Register<LoginMessage>();
             MessageFactory.Instance.Register<TextMessage>();
 
